@@ -46,8 +46,7 @@ function renderFilmHTML(data) {
   var htmlString = "";
 
   for (i = 0; i < data.length; i++) {
-    var j = i;
-    j++;
+    var j = data[i].film_id;
     htmlString += "<div class='content__box' style='background: url(img/f" + j +  ".jpg); background-position: 50% 50%; background-size: cover; border-radius: 10px; '>" +  "<div class='content__cover' style='height: 100%; background-image: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)); display: flex; justify-content: center; align-items: center; border-radius:10px;'>" + "<p>"+ data[i].title + " was made in " + data[i].year + "<br> Genre: " + data[i].genre + "<br>  Length: " + data[i].length + "<br> Rating: " + data[i].rating + "</p>" + "<button onclick='showOneFilm(this)' id='"+ data[i].film_id +"'>"+ "Edit" +  "</button>" + "<div class='okvir' id='ok"+ data[i].film_id+"' style='display: none'>" +""+ "</div>" + "</div>" +"</div>";
   }
 
@@ -439,7 +438,7 @@ function showOneGlumac(elem) {
 
   var htmlForma = "<div class='uokvireno'> EDIT GLUMCA";
   htmlForma += "<span class='close' style='margin-left:8rem;'>&times;</span>";
-  htmlForma += "<form method='' enctype='multipart/htmlForma += form-data' id='fileUploadForm' action='#'>";
+  htmlForma += "<form method='' enctype='multipart/form-data' id='fileUploadForm' action='#'>";
   htmlForma +=   "<label for='name'>Name:</label>";
   htmlForma +=   "<input id='edName' type='text' name='name' placeholder='Name' /><br/>";
   htmlForma +=   "<label for='lastname'>LastName:</label>";
@@ -539,7 +538,7 @@ function showOneFilm(elem) {
 
   var htmlForma = "<div class='uokvireno'> EDIT FILM";
   htmlForma += "<span class='close' style='margin-left:8rem;'>&times;</span>";
-  htmlForma += "<form method='' enctype='multipart/htmlForma += form-data' id='fileUploadForm' action='#'>";
+  htmlForma += "<form method='' enctype='multipart/form-data' id='fileUploadForm' action='#'>";
   htmlForma +=   "<label for='title'>Title:</label>";
   htmlForma +=   "<input id='edTitle' type='text' title='title' placeholder='Title' /><br/>";
   htmlForma +=   "<label for='genre'>Genre:</label>";
@@ -633,7 +632,7 @@ function getFilmoviGlumca(data) {
   var ruta = "http://localhost:8080/glumci/film";
 
   var data = {};
-  data.glumac_id = data.id;
+  data.glumac_id = ""+broj+"";
   data.name = "Jackie";
   data.lastname = "Chan";
   data.nationality = "Chinese";
@@ -647,15 +646,15 @@ function getFilmoviGlumca(data) {
     if (httprequest.readyState == 4) {
 
       // ova linija 412 cisti prethodno dovucenog glumca
-      /* document.getElementById("content").innerHTML = httprequest.responseType; 
+      document.getElementById("content").innerHTML = httprequest.responseType; 
       
       var ourFilmData = JSON.parse(httprequest.responseText);
       renderFilmHTML(ourFilmData);
-      console.log(ourFilmData); */
+      console.log(ourFilmData);
     }
   }
 
-  httprequest.open("GET", ruta, true);
-  httprequest.setRequestHeader("Content-type", json);
+  httprequest.open("POST", ruta, true);
+  httprequest.setRequestHeader("Content-type", "application/json");
   httprequest.send(json);
 }
